@@ -13,5 +13,13 @@ class MedicalRecord extends Model
 
     protected $fillable = self::FILLABLE;
 
+    public function appointment(){
+        return $this->belongsTo(Appointment::class);
+    }
+    public function diagnosis_files()
+    {
+        return $this->hasMany(MedicalRecordFile::class ,'medical_record_id');
+    }
+
 
 }

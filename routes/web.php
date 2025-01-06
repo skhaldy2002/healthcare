@@ -105,6 +105,9 @@ Route::middleware(['auth','verify'])->group(function () {
 
             Route::get('/{id}/diagnosis/create', [DoctorAppointmentDiagnosisController::class, 'create'])->name('doctor.diagnosis.create');
             Route::post('/{id}/diagnosis/store', [DoctorAppointmentDiagnosisController::class, 'store'])->name('doctor.diagnosis.store');
+
+            Route::post('upload-file', [DoctorAppointmentDiagnosisController::class, 'uploadFiles'])->name('diagnosis.upload.file');
+            Route::post('remove-file', [DoctorAppointmentDiagnosisController::class, 'removeFile'])->name('diagnosis.remove.file');
         });
     });
 
