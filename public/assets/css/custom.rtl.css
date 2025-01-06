@@ -1,0 +1,56 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(../fonts/cairo/Cairo-Bold.woff2);
+}
+* {
+    font-family: myFirstFont;
+}
+.select2-container--bootstrap5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove
+{
+    left:6% !important;
+}
+.ql-blank{
+    text-align: right !important;
+}
+.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg{
+    right: unset !important;
+}
+.ql-editor{
+    text-align: right !important;
+}
+.select2-container--bootstrap5 .select2-selection__clear{
+    right: 15rem; !important;
+}
+.status_filter .select2-selection__clear{
+    right: 8rem;
+}
+.aside-dark .menu .menu-item .menu-section {
+    color: #9698c0 !important;
+    font-size: 13px !important;
+}
+.dataTables_info .select-info{
+    display: none!important;
+}
+.count_notifications{
+    color: #fdfdfd;font-weight: bold;font-size: 15px;border-radius: 50%;
+    background-color: #fd0707;
+    width: 25px;
+    height: 25px;
+    top: 0px;
+    left: 23px;
+    padding-top: 5px;
+    /* right: 10px; */
+    position: absolute;
+}
+.success_row{
+    background-color: #c0f0d7;
+}
+.primary_row{
+    background-color: #d0ebfb;
+}
+.warning_row{
+    background-color: #f9eec2;
+}
+.danger_row{
+    background-color: #fdcfdd;
+}

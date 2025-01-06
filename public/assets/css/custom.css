@@ -1,0 +1,71 @@
+/*@font-face {*/
+/*    font-family: myFirstFont;*/
+/*    !*src: url(../fonts/cairo/Cairo-Bold.woff2);*!*/
+/*    src: url(../fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf);*/
+
+/*}*/
+* {
+    font-family: Poppins, Helvetica, "sans-serif" !important;
+    font-size: 15px !important;
+}
+.image-input [data-action=make-master]{
+    position: absolute;
+    right: 49px;
+    top: 129px;
+}
+.d-flex-custom{
+    flex-flow: wrap;
+}
+.d-flex-custom .parent_div_photo{
+    margin-left: 10px;
+    margin-bottom: 39px;
+}
+
+.product-image{
+    height: 120px;
+    background-color: #f9f7f6;
+}
+.bg-img{
+    border-radius: 8px ;
+    background-size: contain !important;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+#map {
+    height: 100%;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow{
+    height: auto; !important;
+}
+.trip-index .table.table-row-dashed tr{
+    border-bottom-width: 4px !important;
+    border-bottom-style: solid !important;
+}
+
+
+.trip-index .table.gy-5 th, .trip-index .table.gy-5 td {
+    padding-top:  5px !important;
+    padding-bottom: 5px !important;
+    border: 2px  solid #FFFFFF;
+}
+
+.menu-title,.menu-item,.menu-content{
+    /*color: white !important;*/
+}
+.customer-reports .table-responsive{
+    height: 460px !important;
+}
+
+.remove_photo{
+    margin: 0 30%;
+}
+
+input{
+    text-transform: none !important;
+}
+

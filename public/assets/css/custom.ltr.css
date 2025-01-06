@@ -1,0 +1,47 @@
+@font-face {
+
+    /*src: url(../fonts/cairo/Cairo-Bold.woff2);*/
+    /*src: url(../fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf);*/
+
+}
+/**{*/
+/*    font-family: Inter, Helvetica, "sans-serif" !important;*/
+/*}*/
+.menu-sub.menu-sub-dropdown.w-175px.py-4.show{
+    inset: 0px auto auto -450px !important;
+}
+.flatpickr-current-month .numInputWrapper {
+    width: 10ch !important;
+}
+.svg-icon-2{
+    margin-right: 3px !important;
+}
+
+.aside-menu .menu .menu-sub:not([data-popper-placement]) > .menu-item > .menu-content, .aside-menu .menu .menu-sub:not([data-popper-placement]) > .menu-item > .menu-link {
+    padding-left: calc(0.75rem + 20px) !important;
+}
+
+.page-item.active .page-link {
+    background-color: #0c3255 !important;
+}
+
+.nav-line-tabs .nav-item .nav-link.active, .nav-line-tabs .nav-item.show .nav-link, .nav-line-tabs .nav-item .nav-link:hover:not(.disabled) {
+    border-bottom: 1px solid #000000;
+}
+
+.text-active-primary.active {
+    color: #000000 !important;
+}
+
+.widget{
+    padding: 20px !important;
+    text-align: center;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100% !important;
+}
+.aside-home-title{
+    margin-left: 10%;
+}
