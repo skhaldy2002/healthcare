@@ -101,6 +101,7 @@ Route::middleware(['auth','verify'])->group(function () {
             Route::post('/{id}/cancel', [DoctorAppointmentController::class, 'cancel'])->name('doctor.appointments.cancel');
             Route::post('/{id}/confirm', [DoctorAppointmentController::class, 'confirm'])->name('doctor.appointments.confirm');
 
+            // Doctor -> diagnosis
 
             Route::get('/{id}/diagnosis/create', [DoctorAppointmentDiagnosisController::class, 'create'])->name('doctor.diagnosis.create');
             Route::post('/{id}/diagnosis/store', [DoctorAppointmentDiagnosisController::class, 'store'])->name('doctor.diagnosis.store');
