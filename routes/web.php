@@ -54,7 +54,7 @@ Route::middleware(['auth','verify'])->group(function () {
 
         Route::get('/dashboard', [IndexAdminController::class, 'index'])->name('admin.dashboard.index');
 
-
+// admin ->doctor
 
         Route::group(['prefix' => 'doctors'], function () {
             Route::get('/', [AdminDoctorController::class, 'index'])->name('admin.doctors.index');
@@ -92,6 +92,8 @@ Route::middleware(['auth','verify'])->group(function () {
     // Doctor Routes
     Route::group(['prefix' => 'doctor', 'middleware' => 'role:'.Enum::DOCTOR],function () {
         Route::get('/dashboard', [DoctorController::class, 'index'])->name('doctor.dashboard.index');
+
+        // Doctor -> appointments
         Route::group(['prefix' => 'appointments'],function () {
             Route::get('/', [DoctorAppointmentController::class, 'index'])->name('doctor.appointments.index');
             Route::get('/create/{id?}', [DoctorAppointmentController::class, 'create'])->name('doctor.appointments.create');
