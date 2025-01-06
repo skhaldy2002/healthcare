@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function (){
     return redirect()->route('login');
 });
-
+ // auth
 Route::group(['prefix' => 'auth', 'middleware' => 'guest'], function () {
     Route::get('login', [LoginController::class, 'index'])->name('login');
     Route::post('custom-login', [LoginController::class, 'login'])->name('custom-login');
