@@ -9,10 +9,12 @@ use App\Http\Requests\Appointments\AppointmentRequest;
 use App\Http\Resources\Appointments\PatientAppointmentResource;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class PatientAppointmentController extends Controller
 {
@@ -77,15 +79,25 @@ class PatientAppointmentController extends Controller
                 return back()->withErrors(['message' => 'This appointment is already booked.']);
             }
 
-            $item = Appointment::query()->filter()->updateOrCreate([
+            $appointment = Appointment::query()->filter()->updateOrCreate([
                 'id' => $id,
             ], $data);
+
+            $patient = $appointment->patient;
+            $doctor = $appointment->doctor;
+
+            Notification::send($doctor, new AppointmentNotification([
+                'user_id' => $doctor->id,
+                'title' => 'Appointment Request',
+                'body' => 'Appointment Request fot Doctor ('.$doctor->name.') for Appointment ('.$appointment->appointment_date.')',
+                'type' => 'appointment_request',
+            ]));
             DB::commit();
 
             return $this->returnBackWithSaveDone();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception->getMessage());
+            dd($exception);
             return $this->returnBackWithSaveDoneFailed();
         }
     }

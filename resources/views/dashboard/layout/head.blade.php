@@ -25,8 +25,9 @@
 <script src="{{asset('')}}assets/plugins/global/axios.js"></script>
 {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
 <link href="{{asset('')}}assets/css/flatpickr.min.css" rel="stylesheet" type="text/css" />
-
 {{--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">--}}
 
+@vite(['resources/js/app.js'])
 
 @yield('head')
+

@@ -14,6 +14,7 @@ use App\Http\Controllers\Patient\Dashboard\IndexController as PatientController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Patient\Dashboard\PatientAppointmentController;
 use App\Http\Controllers\Patient\Dashboard\PatientAppointmentDiagnosisController;
+use App\Http\Controllers\UpdateFcmController;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
@@ -141,7 +142,7 @@ Route::middleware(['auth','verify'])->group(function () {
 
 });
 
-
+Route::post('/store-token', UpdateFcmController::class);
 
 
 

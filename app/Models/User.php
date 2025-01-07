@@ -33,11 +33,18 @@ class User extends Authenticatable
         'specialty_id',
         'verified_by_admin',
         'address',
+        'fcm_token',
     ];
 
     protected $fillable = self::FILLABLE;
 
     protected $appends = ['photo_path'];
+
+
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -75,7 +82,6 @@ class User extends Authenticatable
         }
         return asset('storage/user-photos/' . $this->photo);
     }
-
 
     public function scopeFilter($q)
     {

@@ -10,10 +10,12 @@ use App\Http\Requests\Appointments\DoctorAppointmentRequest;
 use App\Http\Resources\Appointments\DoctorAppointmentResource;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class DoctorAppointmentController extends Controller
 {
@@ -106,10 +108,19 @@ class DoctorAppointmentController extends Controller
     }
     public function confirm($id){
         try {
-            $item = Appointment::query()->filter()->findOrFail($id);
-            $item->update([
+            $appointment = Appointment::query()->filter()->findOrFail($id);
+            $appointment->update([
                 'status' =>Enum::CONFIRMED
             ]);
+
+            $patient = $appointment->patient;
+
+            Notification::send($patient, new AppointmentNotification([
+                'user_id' => $patient->id,
+                'title' => 'Appointment Request',
+                'body' => 'Appointment Request fot Doctor ('.$patient->name.') for Appointment ('.$appointment->appointment_date.')',
+                'type' => 'appointment_request',
+            ]));
             return $this->response_json(true, StatusCodes::OK, 'confirm Successfully');
         } catch (QueryException $exception) {
             return $this->invalidIntParameter();

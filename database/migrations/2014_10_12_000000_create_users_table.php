@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->text('fcm_token')->nullable();
             $table->foreignId('specialty_id')->nullable();
             $table->string('photo')->default('blank.png');
             $table->tinyInteger('role')->default(Enum::ADMIN); // admin
