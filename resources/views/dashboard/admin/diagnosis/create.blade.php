@@ -42,7 +42,7 @@
                                     <textarea  name="diagnosis"
                                                class="form-control form-control-solid mb-3 mb-lg-0"
                                                placeholder="address" >
-                                                    {{$appointment->medical_records?$appointment->medical_records->diagnosis:old('diagnosis')}}
+                                                    {{$appointment->medical_record?$appointment->medical_record->diagnosis:old('diagnosis')}}
                                                 </textarea>
                                 </div>
                                 <!--end::Input group-->
@@ -57,7 +57,7 @@
                                     <textarea  name="treatment"
                                                class="form-control form-control-solid mb-3 mb-lg-0"
                                                placeholder="address" >
-                                                    {{$appointment->medical_records?$appointment->medical_records->treatment:old('treatment')}}
+                                                    {{$appointment->medical_record?$appointment->medical_record->treatment:old('treatment')}}
                                                 </textarea>
                                 </div>
                                 <!--end::Input group-->

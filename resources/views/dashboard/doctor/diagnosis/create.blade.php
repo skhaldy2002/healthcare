@@ -42,7 +42,7 @@
                                     <textarea  name="diagnosis"
                                                class="form-control form-control-solid mb-3 mb-lg-0"
                                                placeholder="address" >
-                                                    {{$appointment->medical_records?$appointment->medical_records->diagnosis:old('diagnosis')}}
+                                                    {{$appointment->medical_record?$appointment->medical_record->diagnosis:old('diagnosis')}}
                                                 </textarea>
                                 </div>
                                 <!--end::Input group-->
@@ -57,13 +57,65 @@
                                     <textarea  name="treatment"
                                                class="form-control form-control-solid mb-3 mb-lg-0"
                                                placeholder="address" >
-                                                    {{$appointment->medical_records?$appointment->medical_records->treatment:old('treatment')}}
+                                                    {{$appointment->medical_record?$appointment->medical_record->treatment:old('treatment')}}
                                                 </textarea>
                                 </div>
                                 <!--end::Input group-->
 
 
                             </div>
+
+                            <div class="row">
+                                <!--begin::Input group-->
+                                <div class="col-12 mb-10">
+                                    <div class="card card-flush py-4 mt-4">
+                                        <!--begin::Card header-->
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h2>Diagnosis Files</h2>
+                                            </div>
+                                        </div>
+                                        <!--end::Card header-->
+                                        <!--begin::Card body-->
+                                        <div class="card-body pt-0">
+                                            <!--begin::Input group-->
+                                            @if(isset($appointment) && $appointment->medical_record && @$appointment->medical_record->diagnosis_files)
+                                                <div class="fv-row mb-2">
+                                                    <div class="mt-2">
+                                                        @foreach($appointment->medical_record->diagnosis_files as $file)
+                                                            <div class="parent_div_file mt-2" id="file_{{ $file->id }}">
+                                                                <div class="d-flex align-items-center">
+                                                                    <a href="{{ asset('storage/diagnosis-files/' . $file->name) }}" target="_blank" class="btn btn-primary btn-sm me-2">
+                                                                        View File
+                                                                    </a>
+                                                                    <button type="button" class="btn btn-danger btn-sm remove_file"
+                                                                            data-file_id="{{ $file->id }}">
+                                                                        Delete
+                                                                    </button>
+                                                                    {{$file->name}}
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <div class="fv-row mb-2">
+                                                <!--begin::Dropzone-->
+                                                <div class="dropzone dropzone-default dropzone-primary" id="kt_dropzone_2">
+                                                    <div class="dropzone-msg dz-message needsclick">
+                                                        <h3 class="dropzone-msg-title">Drop diagnosis files here or click to upload.</h3>
+                                                        <span class="dropzone-msg-desc">Upload up to 10 files.</span>
+                                                    </div>
+                                                </div>
+                                                <!--end::Dropzone-->
+                                            </div>
+                                            <!--end::Input group-->
+                                        </div>
+                                        <!--end::Card header-->
+                                    </div>
+                                </div>
+                            </div>
+
 
 
                             <!--begin::Actions-->
@@ -96,7 +148,90 @@
 @endsection
 @section('scripts')
 
+    <script>
+        $(document).ready(function() {
+            //set initial state.
+            $('body').on('click', '.remove_file', function (e) {
+                var file_id = $(this).data('file_id');
+                e.preventDefault();
+                $.ajax({
+                    type: "post",
+                    url: "{{route('diagnosis.remove.file')}}",
+                    data: {
+                        'file_id': file_id,
+                        'medical_record_id': "{{isset($appointment->medical_record)?$appointment->medical_record->id:null}}",
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN':
+                            "{{ csrf_token() }}"
+                    },
 
+                    success: function (data) {
+                        if (data.status == true) {
+                            $('#file_' + file_id).remove();
+
+                        }
+
+                    }
+
+                });
+
+            });
+
+
+
+
+
+
+
+        });
+    </script>
+    <script>
+        // new KTImageInput("avatar");
+        Dropzone.autoDiscover = false;
+        var uploadedDocumentMap = {}
+        $("#kt_dropzone_2").dropzone({
+            url: "{{route('diagnosis.upload.file')}}",
+            addRemoveLinks: true,
+            acceptedFiles: null,
+            success:
+                function (file, response) {
+                    var imgName = response;
+                    $('form').append('<input type="hidden" name="medical_record_files[]" value="' + imgName + '">')
+                    uploadedDocumentMap[file.name] = imgName
+                }
+            ,
+            error: function (file, response) {
+                console.log("aaa");
+            },
+            removedfile: function(file)
+            {
+
+            },
+            headers: {
+                'X-CSRF-TOKEN':
+                    "{{ csrf_token() }}"
+            },
+            init: function () {
+                @if(isset($event) && $event->photos)
+                var files;
+                {!! json_encode($event->photos) !!}
+                for (var i in files) {
+                    var file = files[i]
+                    this.options.addedfile.call(this, file)
+                    file.previewElement.classList.add('dz-complete')
+                    console.log(file)
+                    $('form').append('<input type="hidden" name="photos[]" value="' + file.file_name + '">')
+                }
+                @endif
+            }
+        });
+
+
+
+
+
+    </script>
 
 
 @endsection

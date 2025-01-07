@@ -2,6 +2,7 @@
 
 use App\Classes\Timeout;
 use App\Constants\Enum;
+use Illuminate\Support\Str;
 
 
 if (!function_exists('setTimeout')) {
@@ -87,9 +88,9 @@ function getColAndDirForOrderBy2($model){
 }
 function uploadFile($request,$folder_name,$feild='file'){
     if($request->$feild){
-        $imageName = time().rand(1,100).'.'.$request->$feild->getClientOriginalExtension();
-        $request->$feild->storeAs('public/'.$folder_name, $imageName);
-        return $imageName;
+        $fileName = time() . '_' . Str::slug(pathinfo($request->$feild->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $request->$feild->getClientOriginalExtension();
+        $request->$feild->storeAs('public/'.$folder_name, $fileName);
+        return $fileName;
     }
 }
 function uploadFile2($file,$folder_name){

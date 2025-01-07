@@ -11,6 +11,7 @@ use App\Http\Requests\Appointments\DoctorAppointmentRequest;
 use App\Http\Resources\Appointments\DoctorAppointmentResource;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
+use App\Models\MedicalRecordFile;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -43,22 +44,58 @@ class DoctorAppointmentDiagnosisController extends Controller
     public function store(DoctorAppointmentDiagnosisRequest $request, $id = null)
     {
         $data = $request->only(MedicalRecord::FILLABLE);
+        $medical_record_files= $request->get('medical_record_files',[]);
         DB::beginTransaction();
         try {
 
             $appointment = Appointment::query()->findOrFail($id);
             $data['appointment_id'] = $appointment->id;
             $item = MedicalRecord::query()->updateOrCreate([
-                'id' => @$appointment->medical_records->id,
+                'id' => @$appointment->medical_record->id,
             ], $data);
+
+
+            if(isset($medical_record_files)){
+                foreach ($medical_record_files as $file){
+                    MedicalRecordFile::create([
+                        'medical_record_id' => $item->id,
+                        'name' => $file,
+                    ]);
+                }
+            }
+
             DB::commit();
 
             return $this->returnBackWithSaveDone();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception->getMessage());
             return $this->returnBackWithSaveDoneFailed();
         }
+    }
+
+    public function uploadFiles(Request $request){
+        return uploadFile($request,'diagnosis-files','file');
+    }
+    public function removeFile(Request $request){
+
+        $request->validate([
+            'file_id' => ['required', 'exists:medical_record_files,id' ,'numeric'],
+            'medical_record_id' => ['required', 'exists:medical_records,id' ,'numeric']
+        ]);
+        $file = MedicalRecordFile::where('medical_record_id',$request->medical_record_id)->where('id',$request->file_id)->first();
+        if($file ){
+            if($file->name !='default.png'){
+                unlink(base_path().'/storage/app/public/diagnosis-files/'. $file->name);
+            }
+            $file->delete();
+            return response()->json([
+                'status' => true,
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+        ]);
     }
 
 }
