@@ -13,10 +13,12 @@ use App\Models\Appointment;
 use App\Models\MedicalRecord;
 use App\Models\MedicalRecordFile;
 use App\Models\User;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class DoctorAppointmentDiagnosisController extends Controller
 {
@@ -63,6 +65,16 @@ class DoctorAppointmentDiagnosisController extends Controller
                     ]);
                 }
             }
+
+            $patient = $appointment->patient;
+            $doctor = $appointment->doctor;
+
+            Notification::send($patient, new AppointmentNotification([
+                'user_id' => $patient->id,
+                'title' => 'Appointment diagnosis',
+                'body' => 'Doctor ('.$doctor->name.') sent diagnosis for Appointment date ('.$appointment->appointment_date.')',
+                'type' => 'appointment_diagnosis',
+            ]));
 
             DB::commit();
 

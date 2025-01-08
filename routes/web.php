@@ -1,6 +1,8 @@
 <?php
 
 use App\Constants\Enum;
+use App\Http\Controllers\AccountSettingsController;
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\Appointment\AdminAppointmentController;
 use App\Http\Controllers\Admin\Appointment\AdminAppointmentDiagnosisController;
 use App\Http\Controllers\Admin\Dashboard\IndexController as IndexAdminController;
@@ -47,6 +49,13 @@ Route::group(['prefix' => 'auth', 'middleware' => 'guest'], function () {
 });
 Route::middleware(['auth','verify'])->group(function () {
 
+
+    Route::get('account', [AccountSettingsController::class, 'create'])->name('account.create')->withoutMiddleware('admin');
+    Route::post('account/update-info', [AccountSettingsController::class, 'updateInfo'])->name('account.update-info')->withoutMiddleware('admin');
+    Route::post('account/update-email', [AccountSettingsController::class, 'updateEmail'])->name('account.update-email')->withoutMiddleware('admin');
+    Route::post('account/update-password', [AccountSettingsController::class, 'updatePassword'])->name('account.update-password')->withoutMiddleware('admin');
+
+
     Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
@@ -54,6 +63,8 @@ Route::middleware(['auth','verify'])->group(function () {
     Route::group(['prefix' => 'admin', 'middleware' => 'role:'.Enum::ADMIN],function () {
 
         Route::get('/dashboard', [IndexAdminController::class, 'index'])->name('admin.dashboard.index');
+
+        Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
 
 // admin ->doctor
 

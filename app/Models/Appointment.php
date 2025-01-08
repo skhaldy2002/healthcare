@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SystemLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
 {
-    use HasFactory;
+    use HasFactory,SystemLog;
     const FILLABLE = [
         'patient_id',
         'doctor_id',

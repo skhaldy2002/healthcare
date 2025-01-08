@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SystemLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MedicalRecord extends Model
 {
-    use HasFactory;
+    use HasFactory,SystemLog;
 
     const FILLABLE = ['treatment','diagnosis','appointment_id'];
 

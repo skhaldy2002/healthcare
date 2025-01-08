@@ -15,8 +15,42 @@
                             <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
 
                             <!--end::Svg Icon-->
-                            <div class="text-white fw-bolder fs-2 mb-2 mt-5"> Admins</div>
-                            <div class="fw-bold text-white">10
+                            <div class="text-white fw-bolder fs-2 mb-2 mt-5"> Doctors</div>
+                            <div class="fw-bold text-white">{{\App\Models\User::query()->doctors()->count()}}
+
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                    </a>
+                    <!--end::Statistics Widget 5-->
+                </div>
+                <div class="col-xl-4">
+                    <!--begin::Statistics Widget 5-->
+                    <a href="#" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
+                        <!--begin::Body-->
+                        <div class="card-body">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
+
+                            <!--end::Svg Icon-->
+                            <div class="text-white fw-bolder fs-2 mb-2 mt-5"> Patients</div>
+                            <div class="fw-bold text-white">{{\App\Models\User::query()->patients()->count()}}
+
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                    </a>
+                    <!--end::Statistics Widget 5-->
+                </div>
+                <div class="col-xl-4">
+                    <!--begin::Statistics Widget 5-->
+                    <a href="#" class="card bg-success hoverable card-xl-stretch mb-xl-8">
+                        <!--begin::Body-->
+                        <div class="card-body">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
+
+                            <!--end::Svg Icon-->
+                            <div class="text-white fw-bolder fs-2 mb-2 mt-5"> Appointments</div>
+                            <div class="fw-bold text-white">{{\App\Models\Appointment::query()->count()}}
 
                             </div>
                         </div>

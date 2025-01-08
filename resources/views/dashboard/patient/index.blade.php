@@ -6,8 +6,8 @@
         <div id="kt_content_container" class="container-xxl">
 
             <!--begin::Row-->
-            <div class="row g-5 g-xl-8">
-                <div class="col-xl-4">
+            <div class="row">
+                <div class="col-xl-12">
                     <!--begin::Statistics Widget 5-->
                     <a href="#" class="card bg-danger hoverable card-xl-stretch mb-xl-8">
                         <!--begin::Body-->
@@ -15,8 +15,8 @@
                             <!--begin::Svg Icon | path: icons/duotune/general/gen008.svg-->
 
                             <!--end::Svg Icon-->
-                            <div class="text-white fw-bolder fs-2 mb-2 mt-5"> Patients</div>
-                            <div class="fw-bold text-white">10
+                            <div class="text-white fw-bolder fs-2 mb-2 mt-5"> Appointments</div>
+                            <div class="fw-bold text-white">{{auth()->user()->patientAppointments->count()}}
 
                             </div>
                         </div>

@@ -95,10 +95,20 @@ class DoctorAppointmentController extends Controller
     }
     public function cancel($id){
         try {
-            $item = Appointment::query()->filter()->findOrFail($id);
-            $item->update([
+            $appointment = Appointment::query()->filter()->findOrFail($id);
+            $appointment->update([
                 'status' =>Enum::CANCELLED
             ]);
+            $patient = $appointment->patient;
+            $doctor = $appointment->doctor;
+
+            Notification::send($patient, new AppointmentNotification([
+                'user_id' => $patient->id,
+                'title' => 'Appointment cancelled',
+                'body' => 'Doctor ('.$doctor->name.') Appointment cancelled  for Appointment date ('.$appointment->appointment_date.')',
+                'type' => 'appointment_cancelled',
+            ]));
+
             return $this->response_json(true, StatusCodes::OK, 'Cancel Successfully');
         } catch (QueryException $exception) {
             return $this->invalidIntParameter();
@@ -114,12 +124,13 @@ class DoctorAppointmentController extends Controller
             ]);
 
             $patient = $appointment->patient;
+            $doctor = $appointment->doctor;
 
             Notification::send($patient, new AppointmentNotification([
                 'user_id' => $patient->id,
-                'title' => 'Appointment Request',
-                'body' => 'Appointment Request fot Doctor ('.$patient->name.') for Appointment ('.$appointment->appointment_date.')',
-                'type' => 'appointment_request',
+                'title' => 'Appointment Confirmation',
+                'body' => 'Doctor ('.$doctor->name.') Appointment Confirmed  for Appointment date ('.$appointment->appointment_date.')',
+                'type' => 'appointment_confirmed',
             ]));
             return $this->response_json(true, StatusCodes::OK, 'confirm Successfully');
         } catch (QueryException $exception) {

@@ -88,8 +88,8 @@ class PatientAppointmentController extends Controller
 
             Notification::send($doctor, new AppointmentNotification([
                 'user_id' => $doctor->id,
-                'title' => 'Appointment Request',
-                'body' => 'Appointment Request fot Doctor ('.$doctor->name.') for Appointment ('.$appointment->appointment_date.')',
+                'title' => 'Appointment request',
+                'body' => 'Patient ('.$patient->name.') Appointment request  for Appointment date ('.$appointment->appointment_date.')',
                 'type' => 'appointment_request',
             ]));
             DB::commit();
