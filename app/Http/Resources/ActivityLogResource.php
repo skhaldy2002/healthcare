@@ -29,7 +29,7 @@ class ActivityLogResource extends JsonResource
             'created_at' => $this->created_at,
             'description' => $this->description,
             'subject_name' => $subject_name,
-            'actions' =>  view('dashboard.settings.activity_log.partial.datatable_cols._action',['item' => $this])->render()
+            'actions' =>  view('dashboard.activity_log.partial.datatable_cols._action',['item' => $this])->render()
 
         ];
     }

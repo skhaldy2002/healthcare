@@ -14,6 +14,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 
 class PatientAppointmentController extends Controller
@@ -92,8 +93,8 @@ class PatientAppointmentController extends Controller
                 'body' => 'Patient ('.$patient->name.') Appointment request  for Appointment date ('.$appointment->appointment_date.')',
                 'type' => 'appointment_request',
             ]));
-            DB::commit();
 
+            DB::commit();
             return $this->returnBackWithSaveDone();
         } catch (\Exception $exception) {
             DB::rollBack();
